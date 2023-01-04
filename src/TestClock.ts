@@ -122,8 +122,8 @@ export declare namespace TestClock {
  * @since 1.0.0
  * @category environment
  */
-export const defaultTestClock: Layer.Layer<Annotations.Annotations | Live.Live, never, TestClock> =
-  internal.defaultTestClock
+export const defaultTestClock: Layer.Layer<Annotations.Annotations | Live.Live, never, TestClock> = internal
+  .defaultTestClock as any
 
 /**
  * Constructs a `Layer` containing a `TestClock`.
@@ -133,7 +133,7 @@ export const defaultTestClock: Layer.Layer<Annotations.Annotations | Live.Live, 
  * @category environment
  */
 export const live: (data: TestClock.Data) => Layer.Layer<Annotations.Annotations | Live.Live, never, TestClock> =
-  internal.live
+  internal.live as any
 
 /**
  * Accesses a `TestClock` instance in the environment and increments the time

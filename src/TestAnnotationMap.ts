@@ -58,7 +58,7 @@ export const isTestAnnotationMap = (u: unknown): u is TestAnnotationMap => {
 export const annotate: <A>(
   key: TestAnnotation.TestAnnotation<A>,
   value: A
-) => (self: TestAnnotationMap) => TestAnnotationMap = testAnnotationMap.annotate
+) => (self: TestAnnotationMap) => TestAnnotationMap = testAnnotationMap.annotate as any
 
 /**
  * Combines two `TestAnnotationMap`s.
@@ -66,8 +66,8 @@ export const annotate: <A>(
  * @since 1.0.0
  * @category mutations
  */
-export const combine: (that: TestAnnotationMap) => (self: TestAnnotationMap) => TestAnnotationMap =
-  testAnnotationMap.combine
+export const combine: (that: TestAnnotationMap) => (self: TestAnnotationMap) => TestAnnotationMap = testAnnotationMap
+  .combine as any
 
 /**
  * The empty `TestAnnotationMap`.
@@ -84,7 +84,8 @@ export const empty: TestAnnotationMap = testAnnotationMap.empty as any
  * @since 1.0.0
  * @category getters
  */
-export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => (self: TestAnnotationMap) => A = testAnnotationMap.get
+export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => (self: TestAnnotationMap) => A = testAnnotationMap
+  .get as any
 
 /**
  * Constructs a new `TestAnnotationMap` from the specified map.
@@ -93,7 +94,7 @@ export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => (self: TestAnnot
  * @category constructors
  */
 export const make: (map: ReadonlyMap<TestAnnotation.TestAnnotation<unknown>, unknown>) => TestAnnotationMap =
-  testAnnotationMap.make
+  testAnnotationMap.make as any
 
 /**
  * Overwrites the specified key/value pair in the `TestAnnotationMap`.
@@ -104,7 +105,7 @@ export const make: (map: ReadonlyMap<TestAnnotation.TestAnnotation<unknown>, unk
 export const overwrite: <A>(
   key: TestAnnotation.TestAnnotation<A>,
   value: A
-) => (self: TestAnnotationMap) => TestAnnotationMap = testAnnotationMap.overwrite
+) => (self: TestAnnotationMap) => TestAnnotationMap = testAnnotationMap.overwrite as any
 
 /**
  * Updates the value associated with the specified key specified in the
@@ -116,4 +117,4 @@ export const overwrite: <A>(
 export const update: <A>(
   key: TestAnnotation.TestAnnotation<A>,
   f: (value: A) => A
-) => (self: TestAnnotationMap) => TestAnnotationMap = testAnnotationMap.update
+) => (self: TestAnnotationMap) => TestAnnotationMap = testAnnotationMap.update as any

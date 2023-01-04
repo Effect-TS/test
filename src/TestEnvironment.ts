@@ -23,10 +23,10 @@ export type TestEnvironment =
  * @since 1.0.0
  * @category environment
  */
-export const live: Layer.Layer<DefaultServices.DefaultServices, never, TestEnvironment> = internal.live
+export const live: Layer.Layer<DefaultServices.DefaultServices, never, TestEnvironment> = internal.live as any
 
 /**
  * @since 1.0.0
  * @category environment
  */
-export const TestEnvironment: Layer.Layer<never, never, TestEnvironment> = internal.TestEnvironment
+export const TestEnvironment: Layer.Layer<never, never, TestEnvironment> = internal.TestEnvironment as any
