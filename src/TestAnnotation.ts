@@ -2,6 +2,7 @@
  * @since 1.0.0
  */
 import type * as Fiber from "@effect/io/Fiber"
+import * as testAnnotation from "@effect/io/internal/testing/testAnnotation"
 import type * as Chunk from "@fp-ts/data/Chunk"
 import type * as Context from "@fp-ts/data/Context"
 import type * as Either from "@fp-ts/data/Either"
@@ -9,9 +10,6 @@ import type * as Equal from "@fp-ts/data/Equal"
 import type * as HashSet from "@fp-ts/data/HashSet"
 import type * as MutableRef from "@fp-ts/data/MutableRef"
 import type * as SortedSet from "@fp-ts/data/SortedSet"
-
-/** @internal */
-import * as testAnnotation from "@effect/io/internal/testing/testAnnotation"
 
 /**
  * @since 1.0.0
@@ -71,7 +69,7 @@ export declare namespace TestAnnotation {
  * @since 1.0.0
  * @category refinements
  */
-export const isTestAnnotation: (u: unknown) => u is TestAnnotation<unknown> = testAnnotation.isTestAnnotation
+export const isTestAnnotation: (u: unknown) => u is TestAnnotation<unknown> = testAnnotation.isTestAnnotation as any
 
 /**
  * Constructs a new `TestAnnotation`.
@@ -84,7 +82,7 @@ export const make: <A>(
   tag: Context.Tag<A>,
   initial: A,
   combine: (a: A, b: A) => A
-) => TestAnnotation<A> = testAnnotation.make
+) => TestAnnotation<A> = testAnnotation.make as any
 
 /**
  * @since 1.0.0
@@ -95,7 +93,7 @@ export const fibers: TestAnnotation<
     number,
     Chunk.Chunk<MutableRef.MutableRef<SortedSet.SortedSet<Fiber.RuntimeFiber<unknown, unknown>>>>
   >
-> = testAnnotation.fibers
+> = testAnnotation.fibers as any
 
 /**
  * An annotation which counts ignored tests.
@@ -103,7 +101,7 @@ export const fibers: TestAnnotation<
  * @since 1.0.0
  * @category annotations
  */
-export const ignored: TestAnnotation<number> = testAnnotation.ignored
+export const ignored: TestAnnotation<number> = testAnnotation.ignored as any
 
 /**
  * An annotation which counts repeated tests.
@@ -111,7 +109,7 @@ export const ignored: TestAnnotation<number> = testAnnotation.ignored
  * @since 1.0.0
  * @category annotations
  */
-export const repeated: TestAnnotation<number> = testAnnotation.repeated
+export const repeated: TestAnnotation<number> = testAnnotation.repeated as any
 
 /**
  * An annotation which counts retried tests.
@@ -119,7 +117,7 @@ export const repeated: TestAnnotation<number> = testAnnotation.repeated
  * @since 1.0.0
  * @category annotations
  */
-export const retried: TestAnnotation<number> = testAnnotation.retried
+export const retried: TestAnnotation<number> = testAnnotation.retried as any
 
 /**
  * An annotation which tags tests with strings.
@@ -127,4 +125,4 @@ export const retried: TestAnnotation<number> = testAnnotation.retried
  * @since 1.0.0
  * @category annotations
  */
-export const tagged: TestAnnotation<HashSet.HashSet<string>> = testAnnotation.tagged
+export const tagged: TestAnnotation<HashSet.HashSet<string>> = testAnnotation.tagged as any

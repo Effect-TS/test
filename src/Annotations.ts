@@ -76,7 +76,7 @@ export declare namespace Annotations {
  * @since 1.0.0
  * @category environment
  */
-export const Tag: Context.Tag<Annotations> = annotations.Tag
+export const Tag: Context.Tag<Annotations> = annotations.Tag as any
 
 /**
  * A `Layer` containing an instance of `Annotations`.
@@ -84,7 +84,7 @@ export const Tag: Context.Tag<Annotations> = annotations.Tag
  * @since 1.0.0
  * @category environment
  */
-export const live: Layer.Layer<never, never, Annotations> = annotations.live
+export const live: Layer.Layer<never, never, Annotations> = annotations.live as any
 
 /**
  * Returns `true` if the specified value is an `Annotations`, `false`
@@ -93,7 +93,7 @@ export const live: Layer.Layer<never, never, Annotations> = annotations.live
  * @since 1.0.0
  * @category refinements
  */
-export const isAnnotations: (u: unknown) => u is Annotations = annotations.isAnnotations
+export const isAnnotations: (u: unknown) => u is Annotations = annotations.isAnnotations as any
 
 /**
  * Accesses an `Annotations` instance in the environment and retrieves the
@@ -103,7 +103,8 @@ export const isAnnotations: (u: unknown) => u is Annotations = annotations.isAnn
  * @since 1.0.0
  * @category getters
  */
-export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<Annotations, never, A> = annotations.get
+export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<Annotations, never, A> = annotations
+  .get as any
 
 /**
  * Accesses an `Annotations` instance in the environment and appends the
@@ -116,7 +117,7 @@ export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<An
 export const annotate: <A>(
   key: TestAnnotation.TestAnnotation<A>,
   value: A
-) => Effect.Effect<Annotations, never, void> = annotations.annotate
+) => Effect.Effect<Annotations, never, void> = annotations.annotate as any
 
 /**
  * Returns the set of all fibers in this test.
@@ -129,4 +130,4 @@ export const supervisedFibers: () => Effect.Effect<
   Annotations,
   never,
   SortedSet.SortedSet<Fiber.RuntimeFiber<unknown, unknown>>
-> = annotations.supervisedFibers
+> = annotations.supervisedFibers as any
