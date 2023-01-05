@@ -66,7 +66,7 @@ annotation of the specified type, or its default value if there is none.
 **Signature**
 
 ```ts
-export declare const get: <A>(key: any) => Effect.Effect<Annotations, never, A>
+export declare const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<Annotations, never, A>
 ```
 
 Added in v1.0.0
@@ -160,7 +160,10 @@ specified annotation to the annotation map.
 **Signature**
 
 ```ts
-export declare const annotate: <A>(key: any, value: A) => Effect.Effect<Annotations, never, void>
+export declare const annotate: <A>(
+  key: TestAnnotation.TestAnnotation<A>,
+  value: A
+) => Effect.Effect<Annotations, never, void>
 ```
 
 Added in v1.0.0

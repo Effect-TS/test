@@ -1,6 +1,6 @@
 ---
 title: TestClock.ts
-nav_order: 5
+nav_order: 6
 parent: Modules
 ---
 
@@ -41,7 +41,7 @@ The default `Layer` containing a `TestClock`.
 **Signature**
 
 ```ts
-export declare const defaultTestClock: Layer.Layer<any, never, TestClock>
+export declare const defaultTestClock: Layer.Layer<Annotations.Annotations | Live.Live, never, TestClock>
 ```
 
 Added in v1.0.0

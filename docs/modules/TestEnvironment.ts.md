@@ -1,6 +1,6 @@
 ---
 title: TestEnvironment.ts
-nav_order: 7
+nav_order: 8
 parent: Modules
 ---
 
@@ -27,7 +27,7 @@ Added in v1.0.0
 **Signature**
 
 ```ts
-export declare const TestEnvironment: Layer.Layer<never, never, any>
+export declare const TestEnvironment: Layer.Layer<never, never, TestEnvironment>
 ```
 
 Added in v1.0.0
@@ -37,7 +37,7 @@ Added in v1.0.0
 **Signature**
 
 ```ts
-export declare const live: Layer.Layer<DefaultServices.DefaultServices, never, any>
+export declare const live: Layer.Layer<DefaultServices.DefaultServices, never, TestEnvironment>
 ```
 
 Added in v1.0.0

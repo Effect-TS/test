@@ -1,6 +1,6 @@
 ---
 title: TestAnnotationMap.ts
-nav_order: 4
+nav_order: 5
 parent: Modules
 ---
 
@@ -68,7 +68,7 @@ there is none.
 **Signature**
 
 ```ts
-export declare const get: <A>(key: any) => (self: TestAnnotationMap) => A
+export declare const get: <A>(key: TestAnnotation.TestAnnotation<A>) => (self: TestAnnotationMap) => A
 ```
 
 Added in v1.0.0
@@ -96,7 +96,10 @@ Appends the specified annotation to the annotation map.
 **Signature**
 
 ```ts
-export declare const annotate: <A>(key: any, value: A) => (self: TestAnnotationMap) => TestAnnotationMap
+export declare const annotate: <A>(
+  key: TestAnnotation.TestAnnotation<A>,
+  value: A
+) => (self: TestAnnotationMap) => TestAnnotationMap
 ```
 
 Added in v1.0.0
@@ -120,7 +123,10 @@ Overwrites the specified key/value pair in the `TestAnnotationMap`.
 **Signature**
 
 ```ts
-export declare const overwrite: <A>(key: any, value: A) => (self: TestAnnotationMap) => TestAnnotationMap
+export declare const overwrite: <A>(
+  key: TestAnnotation.TestAnnotation<A>,
+  value: A
+) => (self: TestAnnotationMap) => TestAnnotationMap
 ```
 
 Added in v1.0.0
@@ -133,7 +139,10 @@ Updates the value associated with the specified key specified in the
 **Signature**
 
 ```ts
-export declare const update: <A>(key: any, f: (value: A) => A) => (self: TestAnnotationMap) => TestAnnotationMap
+export declare const update: <A>(
+  key: TestAnnotation.TestAnnotation<A>,
+  f: (value: A) => A
+) => (self: TestAnnotationMap) => TestAnnotationMap
 ```
 
 Added in v1.0.0
