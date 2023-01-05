@@ -72,7 +72,7 @@ Provides the specified `effect` with the "live" default Effect services.
 **Signature**
 
 ```ts
-export declare const live: <R, E, A>(effect: Effect.Effect<R, E, A>) => Effect.Effect<R | Live, E, A>
+export declare const live: <R, E, A>(effect: Effect.Effect<R, E, A>) => Effect.Effect<Live | R, E, A>
 ```
 
 Added in v1.0.0
