@@ -77,6 +77,15 @@ export const forEach: <A, R2, A2>(
 ) => <R>(self: Sample<R, A>) => Effect.Effect<R2 | R, never, Sample<R2 | R, A2>> = internal.forEach
 
 /**
+ * Constructs a new sample from an initial value and a `Stream` of shrinkings.
+ *
+ * @since 1.0.0
+ * @category constructors
+ */
+export const make: <R, A>(value: A, shrink: Stream.Stream<R, never, Option.Option<Sample<R, A>>>) => Sample<R, A> =
+  internal.make
+
+/**
  * @since 1.0.0
  * @category mapping
  */

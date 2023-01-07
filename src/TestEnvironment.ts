@@ -4,29 +4,25 @@
 import type * as DefaultServices from "@effect/io/DefaultServices"
 import * as internal from "@effect/io/internal/testing/testEnvironment"
 import type * as Layer from "@effect/io/Layer"
-import type * as Annotations from "@effect/test/Annotations"
-import type * as Live from "@effect/test/Live"
-import type * as TestConfig from "@effect/test/TestConfig"
-
-/**
- * Represents the environment provided to tests.
- *
- * @since 1.0.0
- * @category models
- */
-export type TestEnvironment =
-  | Annotations.Annotations
-  | Live.Live
-  | TestConfig.TestConfig
+import type * as TestServices from "@effect/test/TestServices"
 
 /**
  * @since 1.0.0
  * @category environment
  */
-export const live: Layer.Layer<DefaultServices.DefaultServices, never, TestEnvironment> = internal.live as any
+export const layer: Layer.Layer<DefaultServices.DefaultServices, never, TestServices.TestServices> = internal
+  .live as any
 
 /**
  * @since 1.0.0
  * @category environment
  */
-export const TestEnvironment: Layer.Layer<never, never, TestEnvironment> = internal.TestEnvironment as any
+export const liveEnvironment: () => Layer.Layer<never, never, DefaultServices.DefaultServices> = internal
+  .liveEnvironment as any
+
+/**
+ * @since 1.0.0
+ * @category environment
+ */
+export const testEnvironment: () => Layer.Layer<never, never, TestServices.TestServices> = internal
+  .testEnvironment as any
