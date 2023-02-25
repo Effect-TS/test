@@ -12,17 +12,22 @@ Added in v1.0.0
 
 <h2 class="text-delta">Table of contents</h2>
 
-- [environment](#environment)
+- [context](#context)
   - [defaultLive](#defaultlive)
 - [models](#models)
   - [Live (interface)](#live-interface)
+- [symbols](#symbols)
+  - [LiveTypeId](#livetypeid)
+  - [LiveTypeId (type alias)](#livetypeid-type-alias)
 - [utils](#utils)
   - [live](#live)
+  - [provideLive](#providelive)
   - [withLive](#withlive)
+  - [withLiveScoped](#withlivescoped)
 
 ---
 
-# environment
+# context
 
 ## defaultLive
 
@@ -34,7 +39,7 @@ create your own environment type.
 **Signature**
 
 ```ts
-export declare const defaultLive: Layer.Layer<never, never, internal.Live>
+export declare const defaultLive: Layer.Layer<never, never, Live>
 ```
 
 Added in v1.0.0
@@ -52,13 +57,31 @@ these services.
 
 ```ts
 export interface Live {
-  /**
-   * Provides the specified `effect` with the "live" default Effect services.
-   *
-   * @macro traced
-   */
+  readonly [LiveTypeId]: LiveTypeId
   provide<R, E, A>(effect: Effect.Effect<R, E, A>): Effect.Effect<R, E, A>
 }
+```
+
+Added in v1.0.0
+
+# symbols
+
+## LiveTypeId
+
+**Signature**
+
+```ts
+export declare const LiveTypeId: typeof LiveTypeId
+```
+
+Added in v1.0.0
+
+## LiveTypeId (type alias)
+
+**Signature**
+
+```ts
+export type LiveTypeId = typeof LiveTypeId
 ```
 
 Added in v1.0.0
@@ -67,12 +90,24 @@ Added in v1.0.0
 
 ## live
 
-Provides the specified `effect` with the "live" default Effect services.
+Constructs a new `Live` service wrapped in a layer.
 
 **Signature**
 
 ```ts
-export declare const live: <R, E, A>(effect: Effect.Effect<R, E, A>) => Effect.Effect<Live | R, E, A>
+export declare const live: () => Layer.Layer<DefaultServices.DefaultServices, never, Live>
+```
+
+Added in v1.0.0
+
+## provideLive
+
+Provides a workflow with the "live" default Effect services.
+
+**Signature**
+
+```ts
+export declare const provideLive: <R, E, A>(effect: Effect.Effect<R, E, A>) => Effect.Effect<Live | R, E, A>
 ```
 
 Added in v1.0.0
@@ -85,9 +120,23 @@ ensuring that the workflow itself is run with the test services.
 **Signature**
 
 ```ts
-export declare const withLive: <R, E, A, R2, E2, A2>(
-  f: (effect: Effect.Effect<R, E, A>) => Effect.Effect<R2, E2, A2>
-) => (effect: Effect.Effect<R, E, A>) => Effect.Effect<Live | R | R2, E | E2, A2>
+export declare const withLive: {
+  (live: Live): <R, E, A>(effect: Effect.Effect<R, E, A>) => Effect.Effect<R, E, A>
+  <R, E, A>(effect: Effect.Effect<R, E, A>, live: Live): Effect.Effect<R, E, A>
+}
+```
+
+Added in v1.0.0
+
+## withLiveScoped
+
+Sets the implementation of the live service to the specified value and
+restores it to its original value when the scope is closed.
+
+**Signature**
+
+```ts
+export declare const withLiveScoped: (live: Live) => Effect.Effect<Scope.Scope, never, void>
 ```
 
 Added in v1.0.0

@@ -1,6 +1,6 @@
 ---
 title: TestConfig.ts
-nav_order: 7
+nav_order: 8
 parent: Modules
 ---
 
@@ -14,7 +14,7 @@ Added in v1.0.0
 
 - [constructors](#constructors)
   - [make](#make)
-- [environment](#environment)
+- [context](#context)
   - [Tag](#tag)
   - [defaultTestConfig](#defaulttestconfig)
   - [live](#live)
@@ -47,7 +47,7 @@ export declare const make: (params: {
 
 Added in v1.0.0
 
-# environment
+# context
 
 ## Tag
 

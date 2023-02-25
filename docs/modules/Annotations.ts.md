@@ -12,11 +12,9 @@ Added in v1.0.0
 
 <h2 class="text-delta">Table of contents</h2>
 
-- [environment](#environment)
+- [context](#context)
   - [Tag](#tag)
   - [live](#live)
-- [getters](#getters)
-  - [get](#get)
 - [models](#models)
   - [Annotations (interface)](#annotations-interface)
 - [refinements](#refinements)
@@ -26,11 +24,12 @@ Added in v1.0.0
   - [AnnotationsTypeId (type alias)](#annotationstypeid-type-alias)
 - [utils](#utils)
   - [annotate](#annotate)
+  - [get](#get)
   - [supervisedFibers](#supervisedfibers)
 
 ---
 
-# environment
+# context
 
 ## Tag
 
@@ -46,27 +45,12 @@ Added in v1.0.0
 
 ## live
 
-A `Layer` containing an instance of `Annotations`.
+Constructs a new `Annotations` service.
 
 **Signature**
 
 ```ts
-export declare const live: Layer.Layer<never, never, Annotations>
-```
-
-Added in v1.0.0
-
-# getters
-
-## get
-
-Accesses an `Annotations` instance in the environment and retrieves the
-annotation of the specified type, or its default value if there is none.
-
-**Signature**
-
-```ts
-export declare const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<Annotations, never, A>
+export declare const live: () => Layer.Layer<never, never, Annotations>
 ```
 
 Added in v1.0.0
@@ -87,25 +71,19 @@ monad effect.
 ```ts
 export interface Annotations extends Annotations.Proto {
   /**
-   * Accesses an `Annotations` instance in the environment and retrieves the
+   * Accesses an `Annotations` instance in the context and retrieves the
    * annotation of the specified type, or its default value if there is none.
-   *
-   * @macro traced
    */
   get<A>(key: TestAnnotation.TestAnnotation<A>): Effect.Effect<never, never, A>
 
   /**
-   * Accesses an `Annotations` instance in the environment and appends the
+   * Accesses an `Annotations` instance in the context and appends the
    * specified annotation to the annotation map.
-   *
-   * @macro traced
    */
   annotate<A>(key: TestAnnotation.TestAnnotation<A>, value: A): Effect.Effect<never, never, void>
 
   /**
    * Returns the set of all fibers in this test.
-   *
-   * @macro traced
    */
   supervisedFibers(): Effect.Effect<never, never, SortedSet.SortedSet<Fiber.RuntimeFiber<unknown, unknown>>>
 }
@@ -164,6 +142,19 @@ export declare const annotate: <A>(
   key: TestAnnotation.TestAnnotation<A>,
   value: A
 ) => Effect.Effect<Annotations, never, void>
+```
+
+Added in v1.0.0
+
+## get
+
+Accesses an `Annotations` instance in the environment and retrieves the
+annotation of the specified type, or its default value if there is none.
+
+**Signature**
+
+```ts
+export declare const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<Annotations, never, A>
 ```
 
 Added in v1.0.0

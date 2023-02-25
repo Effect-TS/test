@@ -1,10 +1,10 @@
+import * as Equal from "@effect/data/Equal"
+import { pipe } from "@effect/data/Function"
+import * as Option from "@effect/data/Option"
 import * as Effect from "@effect/io/Effect"
 import * as Stream from "@effect/stream/Stream"
 import * as Sample from "@effect/test/Sample"
 import * as it from "@effect/test/test/utils/extend"
-import * as Equal from "@fp-ts/data/Equal"
-import { pipe } from "@fp-ts/data/Function"
-import * as Option from "@fp-ts/data/Option"
 import { assert, describe } from "vitest"
 
 const equalEffects = <A, B>(

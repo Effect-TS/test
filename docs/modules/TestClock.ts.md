@@ -1,6 +1,6 @@
 ---
 title: TestClock.ts
-nav_order: 6
+nav_order: 7
 parent: Modules
 ---
 
@@ -12,7 +12,7 @@ Added in v1.0.0
 
 <h2 class="text-delta">Table of contents</h2>
 
-- [environment](#environment)
+- [context](#context)
   - [defaultTestClock](#defaulttestclock)
   - [live](#live)
 - [getters](#getters)
@@ -32,7 +32,7 @@ Added in v1.0.0
 
 ---
 
-# environment
+# context
 
 ## defaultTestClock
 
@@ -132,16 +132,16 @@ For example, here is how we can test `Effect.timeout` using `TestClock`:
 import * as Effect from '@effect/io/Effect'
 import * as Fiber from '@effect/io/Fiber'
 import * as TestClock from '@effect/test/TestClock'
-import * as Duration from '@fp-ts/data/Duration'
-import { pipe } from '@fp-ts/data/Function'
-import * as Option from '@fp-ts/data/Option'
+import * as Duration from '@effect/data/Duration'
+import { pipe } from '@effect/data/Function'
+import * as Option from '@effect/data/Option'
 import * as assert from 'node:assert'
 
 Effect.gen(function* ($) {
   const fiber = yield* $(pipe(Effect.sleep(Duration.minutes(5)), Effect.timeout(Duration.minutes(1)), Effect.fork))
   yield* $(TestClock.adjust(Duration.minutes(1)))
   const result = yield* $(Fiber.join(fiber))
-  assert.deepStrictEqual(result, Option.none)
+  assert.deepStrictEqual(result, Option.none())
 })
 ```
 
@@ -161,8 +161,6 @@ export interface TestClock extends Clock.Clock {
    * Increments the current clock time by the specified duration. Any effects
    * that were scheduled to occur on or before the new time will be run in
    * order.
-   *
-   * @macro traced
    */
   adjust(duration: Duration.Duration): Effect.Effect<never, never, void>
 
@@ -170,32 +168,24 @@ export interface TestClock extends Clock.Clock {
    * Increments the current clock time by the specified duration. Any effects
    * that were scheduled to occur on or before the new time will be run in
    * order.
-   *
-   * @macro traced
    */
   adjustWith(duration: Duration.Duration): <R, E, A>(effect: Effect.Effect<R, E, A>) => Effect.Effect<R, E, A>
 
   /**
    * Saves the `TestClock`'s current state in an effect which, when run, will
    * restore the `TestClock` state to the saved state.
-   *
-   * @macro traced
    */
   save(): Effect.Effect<never, never, Effect.Effect<never, never, void>>
 
   /**
    * Sets the current clock time to the specified instant. Any effects that
    * were scheduled to occur on or before the new time will be run in order.
-   *
-   * @macro traced
    */
   setTime(time: number): Effect.Effect<never, never, void>
 
   /**
    * Returns a list of the times at which all queued effects are scheduled to
    * resume.
-   *
-   * @macro traced
    */
   sleeps(): Effect.Effect<never, never, Chunk.Chunk<number>>
 }

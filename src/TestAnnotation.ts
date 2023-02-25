@@ -1,15 +1,15 @@
 /**
  * @since 1.0.0
  */
+import type * as Chunk from "@effect/data/Chunk"
+import type * as Context from "@effect/data/Context"
+import type * as Either from "@effect/data/Either"
+import type * as Equal from "@effect/data/Equal"
+import type * as HashSet from "@effect/data/HashSet"
+import type * as MutableRef from "@effect/data/MutableRef"
+import type * as SortedSet from "@effect/data/SortedSet"
 import type * as Fiber from "@effect/io/Fiber"
-import * as testAnnotation from "@effect/io/internal/testing/testAnnotation"
-import type * as Chunk from "@fp-ts/data/Chunk"
-import type * as Context from "@fp-ts/data/Context"
-import type * as Either from "@fp-ts/data/Either"
-import type * as Equal from "@fp-ts/data/Equal"
-import type * as HashSet from "@fp-ts/data/HashSet"
-import type * as MutableRef from "@fp-ts/data/MutableRef"
-import type * as SortedSet from "@fp-ts/data/SortedSet"
+import * as testAnnotation from "@effect/io/internal_effect_untraced/testing/testAnnotation"
 
 /**
  * @since 1.0.0

@@ -1,13 +1,14 @@
 /**
  * @since 1.0.0
  */
+import type * as Context from "@effect/data/Context"
+import type * as SortedSet from "@effect/data/SortedSet"
 import type * as Effect from "@effect/io/Effect"
 import type * as Fiber from "@effect/io/Fiber"
-import * as annotations from "@effect/io/internal/testing/annotations"
+import * as annotations from "@effect/io/internal_effect_untraced/testing/annotations"
+import * as testServices from "@effect/io/internal_effect_untraced/testing/testServices"
 import type * as Layer from "@effect/io/Layer"
 import type * as TestAnnotation from "@effect/test/TestAnnotation"
-import type * as Context from "@fp-ts/data/Context"
-import type * as SortedSet from "@fp-ts/data/SortedSet"
 
 /**
  * @since 1.0.0
@@ -34,25 +35,19 @@ export type AnnotationsTypeId = typeof AnnotationsTypeId
  */
 export interface Annotations extends Annotations.Proto {
   /**
-   * Accesses an `Annotations` instance in the environment and retrieves the
+   * Accesses an `Annotations` instance in the context and retrieves the
    * annotation of the specified type, or its default value if there is none.
-   *
-   * @macro traced
    */
   get<A>(key: TestAnnotation.TestAnnotation<A>): Effect.Effect<never, never, A>
 
   /**
-   * Accesses an `Annotations` instance in the environment and appends the
+   * Accesses an `Annotations` instance in the context and appends the
    * specified annotation to the annotation map.
-   *
-   * @macro traced
    */
   annotate<A>(key: TestAnnotation.TestAnnotation<A>, value: A): Effect.Effect<never, never, void>
 
   /**
    * Returns the set of all fibers in this test.
-   *
-   * @macro traced
    */
   supervisedFibers(): Effect.Effect<never, never, SortedSet.SortedSet<Fiber.RuntimeFiber<unknown, unknown>>>
 }
@@ -74,17 +69,9 @@ export declare namespace Annotations {
  * The `Context` tag for `Annotations`.
  *
  * @since 1.0.0
- * @category environment
+ * @category context
  */
 export const Tag: Context.Tag<Annotations> = annotations.Tag as any
-
-/**
- * A `Layer` containing an instance of `Annotations`.
- *
- * @since 1.0.0
- * @category environment
- */
-export const live: Layer.Layer<never, never, Annotations> = annotations.live as any
 
 /**
  * Returns `true` if the specified value is an `Annotations`, `false`
@@ -99,35 +86,37 @@ export const isAnnotations: (u: unknown) => u is Annotations = annotations.isAnn
  * Accesses an `Annotations` instance in the environment and retrieves the
  * annotation of the specified type, or its default value if there is none.
  *
- * @macro traced
  * @since 1.0.0
- * @category getters
  */
-export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<Annotations, never, A> = annotations
+export const get: <A>(key: TestAnnotation.TestAnnotation<A>) => Effect.Effect<Annotations, never, A> = testServices
   .get as any
 
 /**
  * Accesses an `Annotations` instance in the environment and appends the
  * specified annotation to the annotation map.
  *
- * @macro traced
  * @since 1.0.0
- * @category utils
  */
 export const annotate: <A>(
   key: TestAnnotation.TestAnnotation<A>,
   value: A
-) => Effect.Effect<Annotations, never, void> = annotations.annotate as any
+) => Effect.Effect<Annotations, never, void> = testServices.annotate as any
 
 /**
  * Returns the set of all fibers in this test.
  *
- * @macro traced
  * @since 1.0.0
- * @category utils
  */
 export const supervisedFibers: () => Effect.Effect<
   Annotations,
   never,
   SortedSet.SortedSet<Fiber.RuntimeFiber<unknown, unknown>>
-> = annotations.supervisedFibers as any
+> = testServices.supervisedFibers
+
+/**
+ * Constructs a new `Annotations` service.
+ *
+ * @category context
+ * @since 1.0.0
+ */
+export const live: () => Layer.Layer<never, never, Annotations> = testServices.annotationsLayer as any

@@ -1,4 +1,10 @@
-import { getCallTrace } from "@effect/io/Debug"
+import * as Chunk from "@effect/data/Chunk"
+import * as Either from "@effect/data/Either"
+import * as Equal from "@effect/data/Equal"
+import { constFalse, constVoid, identity, pipe } from "@effect/data/Function"
+import * as Option from "@effect/data/Option"
+import type { Predicate } from "@effect/data/Predicate"
+import * as Debug from "@effect/io/Debug"
 import * as Effect from "@effect/io/Effect"
 import * as Channel from "@effect/stream/Channel"
 import * as ChildExecutorDecision from "@effect/stream/Channel/ChildExecutorDecision"
@@ -6,12 +12,6 @@ import * as UpstreamPullRequest from "@effect/stream/Channel/UpstreamPullRequest
 import * as UpstreamPullStrategy from "@effect/stream/Channel/UpstreamPullStrategy"
 import * as Stream from "@effect/stream/Stream"
 import type * as Sample from "@effect/test/Sample"
-import * as Chunk from "@fp-ts/data/Chunk"
-import * as Either from "@fp-ts/data/Either"
-import * as Equal from "@fp-ts/data/Equal"
-import { constFalse, constVoid, identity, pipe } from "@fp-ts/data/Function"
-import * as Option from "@fp-ts/data/Option"
-import type { Predicate } from "@fp-ts/data/Predicate"
 
 /** @internal */
 const SampleSymbolKey = "@effect/test/Sample"
@@ -89,25 +89,28 @@ export const flatMap = <A, R2, A2>(f: (a: A) => Sample.Sample<R2, A2>) => {
 }
 
 /**
- * @macro traced
  * @internal
  */
-export const forEach = <A, R2, A2>(f: (a: A) => Effect.Effect<R2, never, A2>) => {
-  const trace = getCallTrace()
-  return <R>(self: Sample.Sample<R, A>): Effect.Effect<R | R2, never, Sample.Sample<R | R2, A2>> =>
-    pipe(
-      f(self.value),
-      Effect.map((a2) =>
-        new SampleImpl(
-          a2,
-          pipe(
-            self.shrink,
-            Stream.mapEffect((option) => pipe(option, Effect.forEachOption(forEach(f))))
+export const forEach: <A, R2, A2>(
+  f: (a: A) => Effect.Effect<R2, never, A2>
+) => <R>(self: Sample.Sample<R, A>) => Effect.Effect<R2 | R, never, Sample.Sample<R2 | R, A2>> = Debug
+  .pipeableWithTrace((trace) =>
+    <A, R2, A2>(f: (a: A) => Effect.Effect<R2, never, A2>) => {
+      return <R>(self: Sample.Sample<R, A>): Effect.Effect<R | R2, never, Sample.Sample<R | R2, A2>> =>
+        pipe(
+          f(self.value),
+          Effect.map((a2) =>
+            new SampleImpl(
+              a2,
+              pipe(
+                self.shrink,
+                Stream.mapEffect((option) => pipe(option, Effect.forEachOption(forEach(f))))
+              )
+            )
           )
-        )
-      )
-    ).traced(trace)
-}
+        ).traced(trace)
+    }
+  )
 
 /** @internal */
 export const map = <A, B>(f: (a: A) => B) => {
@@ -132,7 +135,7 @@ export const shrinkBigInt = (smallest: bigint) => {
       Stream.unfold(smallest, (min) => {
         const mid = min + (max - min) / BigInt(2)
         if (mid === max) {
-          return Option.none
+          return Option.none()
         } else if (bigIntAbs(max - mid) === BigInt(1)) {
           return Option.some([mid, max])
         } else {
@@ -153,7 +156,7 @@ export const shrinkFractional = (smallest: number) => {
       Stream.unfold(smallest, (min) => {
         const mid = min + (max - min) / 2
         if (mid === max) {
-          return Option.none
+          return Option.none()
         } else if (Math.abs(max - mid) < 0.001) {
           return Option.some([min, max])
         } else {
@@ -171,7 +174,7 @@ export const shrinkIntegral = (smallest: number) => {
       Stream.unfold(smallest, (min) => {
         const mid = min + ((max - min) / 2 | 0)
         if (mid === max) {
-          return Option.none
+          return Option.none()
         } else if (Math.abs(max - mid) === 1) {
           return Option.some([mid, max])
         } else {
@@ -217,7 +220,7 @@ export const unfold = <S, A, R>(
   const [value, shrink] = f(start)
   return new SampleImpl(
     value,
-    pipe(shrink, Stream.map((s) => Option.some(unfold(s, f))), Stream.intersperse(Option.none))
+    pipe(shrink, Stream.map((s) => Option.some(unfold(s, f))), Stream.intersperse(Option.none()))
   )
 }
 
@@ -298,31 +301,31 @@ const flatMapStream = <A, R2, A2>(f: (a: A) => Stream.Stream<R2, never, Option.O
               Chunk.head(chunk),
               Option.flatten,
               Option.match(
-                () => UpstreamPullStrategy.PullAfterAllEnqueued(Option.none),
-                () => UpstreamPullStrategy.PullAfterNext(Option.none)
+                () => UpstreamPullStrategy.PullAfterAllEnqueued(Option.none()),
+                () => UpstreamPullStrategy.PullAfterNext(Option.none())
               )
             ),
           (activeDownstreamCount) =>
             UpstreamPullStrategy.PullAfterAllEnqueued<Chunk.Chunk<Either.Either<boolean, A2>>>(
               activeDownstreamCount > 0 ?
                 Option.some(Chunk.of(Either.left(false))) :
-                Option.none
+                Option.none()
             )
         ),
         (chunk) =>
           pipe(
             Chunk.head(chunk),
             Option.match(
-              () => ChildExecutorDecision.Continue,
+              () => ChildExecutorDecision.Continue(),
               (either) =>
                 Equal.equals(Either.left(true))(either) ?
-                  ChildExecutorDecision.Yield :
-                  ChildExecutorDecision.Continue
+                  ChildExecutorDecision.Yield() :
+                  ChildExecutorDecision.Continue()
             )
           )
       ),
       Stream.fromChannel,
       Stream.filter((either) => !Equal.equals(Either.left(true))(either)),
-      Stream.map(Either.match(() => Option.none, Option.some))
+      Stream.map(Either.match(() => Option.none(), Option.some))
     )
 }

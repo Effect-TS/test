@@ -16,14 +16,14 @@ Added in v1.0.0
   - [make](#make)
   - [testRuntime](#testruntime)
 - [execution](#execution)
-  - [unsafeFork](#unsafefork)
-  - [unsafeRun](#unsaferun)
-  - [unsafeRunPromise](#unsaferunpromise)
-  - [unsafeRunPromiseEither](#unsaferunpromiseeither)
-  - [unsafeRunPromiseExit](#unsaferunpromiseexit)
-  - [unsafeRunSync](#unsaferunsync)
-  - [unsafeRunSyncEither](#unsaferunsynceither)
-  - [unsafeRunSyncExit](#unsaferunsyncexit)
+  - [runCallback](#runcallback)
+  - [runFork](#runfork)
+  - [runPromise](#runpromise)
+  - [runPromiseEither](#runpromiseeither)
+  - [runPromiseExit](#runpromiseexit)
+  - [runSync](#runsync)
+  - [runSyncEither](#runsynceither)
+  - [runSyncExit](#runsyncexit)
 
 ---
 
@@ -38,7 +38,7 @@ export declare const make: <R>(
   context: Context.Context<R>,
   runtimeFlags: RuntimeFlags,
   fiberRefs: FiberRefs.FiberRefs
-) => Runtime.Runtime<R>
+) => TestRuntime<R>
 ```
 
 Added in v1.0.0
@@ -48,32 +48,19 @@ Added in v1.0.0
 **Signature**
 
 ```ts
-export declare const testRuntime: Runtime.Runtime<never>
+export declare const testRuntime: TestRuntime<never>
 ```
 
 Added in v1.0.0
 
 # execution
 
-## unsafeFork
+## runCallback
 
 **Signature**
 
 ```ts
-export declare const unsafeFork: <E, A>(
-  effect: Effect.Effect<never, E, A>,
-  scheduler?: Scheduler | undefined
-) => RuntimeFiber<E, A>
-```
-
-Added in v1.0.0
-
-## unsafeRun
-
-**Signature**
-
-```ts
-export declare const unsafeRun: <E, A>(
+export declare const runCallback: <E, A>(
   effect: Effect.Effect<never, E, A>,
   onExit?: ((exit: Exit<E, A>) => void) | undefined
 ) => Runtime.Cancel<E, A>
@@ -81,62 +68,75 @@ export declare const unsafeRun: <E, A>(
 
 Added in v1.0.0
 
-## unsafeRunPromise
+## runFork
 
 **Signature**
 
 ```ts
-export declare const unsafeRunPromise: <E, A>(effect: Effect.Effect<never, E, A>) => Promise<A>
+export declare const runFork: <E, A>(
+  effect: Effect.Effect<never, E, A>,
+  scheduler?: Scheduler | undefined
+) => RuntimeFiber<E, A>
 ```
 
 Added in v1.0.0
 
-## unsafeRunPromiseEither
+## runPromise
 
 **Signature**
 
 ```ts
-export declare const unsafeRunPromiseEither: <E, A>(effect: Effect.Effect<never, E, A>) => Promise<Either<E, A>>
+export declare const runPromise: <E, A>(effect: Effect.Effect<never, E, A>) => Promise<A>
 ```
 
 Added in v1.0.0
 
-## unsafeRunPromiseExit
+## runPromiseEither
 
 **Signature**
 
 ```ts
-export declare const unsafeRunPromiseExit: <E, A>(effect: Effect.Effect<never, E, A>) => Promise<Exit<E, A>>
+export declare const runPromiseEither: <E, A>(effect: Effect.Effect<never, E, A>) => Promise<Either<E, A>>
 ```
 
 Added in v1.0.0
 
-## unsafeRunSync
+## runPromiseExit
 
 **Signature**
 
 ```ts
-export declare const unsafeRunSync: <E, A>(effect: Effect.Effect<never, E, A>) => A
+export declare const runPromiseExit: <E, A>(effect: Effect.Effect<never, E, A>) => Promise<Exit<E, A>>
 ```
 
 Added in v1.0.0
 
-## unsafeRunSyncEither
+## runSync
 
 **Signature**
 
 ```ts
-export declare const unsafeRunSyncEither: <E, A>(effect: Effect.Effect<never, E, A>) => Either<E, A>
+export declare const runSync: <E, A>(effect: Effect.Effect<never, E, A>) => A
 ```
 
 Added in v1.0.0
 
-## unsafeRunSyncExit
+## runSyncEither
 
 **Signature**
 
 ```ts
-export declare const unsafeRunSyncExit: <E, A>(effect: Effect.Effect<never, E, A>) => Exit<E, A>
+export declare const runSyncEither: <E, A>(effect: Effect.Effect<never, E, A>) => Either<E, A>
+```
+
+Added in v1.0.0
+
+## runSyncExit
+
+**Signature**
+
+```ts
+export declare const runSyncExit: <E, A>(effect: Effect.Effect<never, E, A>) => Exit<E, A>
 ```
 
 Added in v1.0.0
