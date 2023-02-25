@@ -1,9 +1,9 @@
+import * as Duration from "@effect/data/Duration"
+import { pipe } from "@effect/data/Function"
 import * as Effect from "@effect/io/Effect"
 import * as Schedule from "@effect/io/Schedule"
 import type * as Scope from "@effect/io/Scope"
 import * as TestRuntime from "@effect/test/Runtime"
-import * as Duration from "@fp-ts/data/Duration"
-import { pipe } from "@fp-ts/data/Function"
 import type { TestAPI } from "vitest"
 import * as V from "vitest"
 
@@ -15,7 +15,7 @@ export const effect = (() => {
   const f = <E, A>(name: string, self: () => Effect.Effect<never, E, A>, timeout = 5_000) => {
     return it(
       name,
-      () => pipe(Effect.suspendSucceed(self), TestRuntime.unsafeRunPromise),
+      () => pipe(Effect.suspendSucceed(self), TestRuntime.runPromise),
       timeout
     )
   }
@@ -27,7 +27,7 @@ export const effect = (() => {
     ) => {
       return it.skip(
         name,
-        () => pipe(Effect.suspendSucceed(self), TestRuntime.unsafeRunPromise),
+        () => pipe(Effect.suspendSucceed(self), TestRuntime.runPromise),
         timeout
       )
     },
@@ -38,7 +38,7 @@ export const effect = (() => {
     ) => {
       return it.only(
         name,
-        () => pipe(Effect.suspendSucceed(self), TestRuntime.unsafeRunPromise),
+        () => pipe(Effect.suspendSucceed(self), TestRuntime.runPromise),
         timeout
       )
     }
@@ -55,7 +55,7 @@ export const live = <E, A>(
     () =>
       pipe(
         Effect.suspendSucceed(self),
-        Effect.unsafeRunPromise
+        Effect.runPromise
       ),
     timeout
   )
@@ -85,7 +85,7 @@ export const scoped = <E, A>(
 ) => {
   return it(
     name,
-    () => pipe(Effect.suspendSucceed(self), Effect.scoped, TestRuntime.unsafeRunPromise),
+    () => pipe(Effect.suspendSucceed(self), Effect.scoped, TestRuntime.runPromise),
     timeout
   )
 }
@@ -97,7 +97,7 @@ export const scopedLive = <E, A>(
 ) => {
   return it(
     name,
-    () => pipe(Effect.suspendSucceed(self), Effect.scoped, Effect.unsafeRunPromise),
+    () => pipe(Effect.suspendSucceed(self), Effect.scoped, Effect.runPromise),
     timeout
   )
 }

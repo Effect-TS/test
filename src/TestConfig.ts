@@ -1,10 +1,10 @@
 /**
  * @since 1.0.0
  */
-import type * as Effect from "@effect/io/Effect"
-import * as internal from "@effect/io/internal/testing/testConfig"
-import type * as Layer from "@effect/io/Layer"
-import type * as Context from "@fp-ts/data/Context"
+import type * as Context from "@effect/data/Context"
+import * as Effect from "@effect/io/Effect"
+import * as internal from "@effect/io/internal_effect_untraced/testing/testConfig"
+import * as Layer from "@effect/io/Layer"
 
 /**
  * The `TestConfig` service provides access to default configuration settings
@@ -39,17 +39,9 @@ export interface TestConfig {
  * The `Context` tag for `TestConfig`.
  *
  * @since 1.0.0
- * @category environment
+ * @category context
  */
 export const Tag: Context.Tag<TestConfig> = internal.Tag
-
-/**
- * The default `TestConfig`.
- *
- * @since 1.0.0
- * @category environment
- */
-export const defaultTestConfig: Layer.Layer<never, never, TestConfig> = internal.defaultTestConfig
 
 /**
  * Constructs a new `TestConfig`.
@@ -68,7 +60,7 @@ export const make = (params: {
  * Constructs a new `TestConfig` service with the specified settings.
  *
  * @since 1.0.0
- * @category environment
+ * @category context
  */
 export const live: (
   params: {
@@ -77,40 +69,53 @@ export const live: (
     readonly samples: number
     readonly shrinks: number
   }
-) => Layer.Layer<never, never, TestConfig> = internal.live
+) => Layer.Layer<never, never, TestConfig> = (params) => Layer.succeed(internal.Tag, params)
+
+/**
+ * The default `TestConfig`.
+ *
+ * @since 1.0.0
+ * @category context
+ */
+export const defaultTestConfig: Layer.Layer<never, never, TestConfig> = live({
+  repeats: 100,
+  retries: 100,
+  samples: 200,
+  shrinks: 1000
+})
 
 /**
  * The number of times to repeat tests to ensure they are stable.
  *
- * @macro traced
  * @since 1.0.0
  * @category getters
  */
-export const repeats: () => Effect.Effect<TestConfig, never, number> = internal.repeats
+export const repeats: () => Effect.Effect<TestConfig, never, number> = () =>
+  Effect.serviceWith(internal.Tag, (_) => _.repeats)
 
 /**
  * The number of times to retry flaky tests.
  *
- * @macro traced
  * @since 1.0.0
  * @category getters
  */
-export const retries: () => Effect.Effect<TestConfig, never, number> = internal.retries
+export const retries: () => Effect.Effect<TestConfig, never, number> = () =>
+  Effect.serviceWith(internal.Tag, (_) => _.retries)
 
 /**
  * The number of sufficient samples to check for a random variable.
  *
- * @macro traced
  * @since 1.0.0
  * @category getters
  */
-export const samples: () => Effect.Effect<TestConfig, never, number> = internal.samples
+export const samples: () => Effect.Effect<TestConfig, never, number> = () =>
+  Effect.serviceWith(internal.Tag, (_) => _.samples)
 
 /**
  * The maximum number of shrinkings to minimize large failures.
  *
- * @macro traced
  * @since 1.0.0
  * @category getters
  */
-export const shrinks: () => Effect.Effect<TestConfig, never, number> = internal.shrinks
+export const shrinks: () => Effect.Effect<TestConfig, never, number> = () =>
+  Effect.serviceWith(internal.Tag, (_) => _.shrinks)

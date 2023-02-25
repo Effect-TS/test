@@ -1,7 +1,7 @@
 /**
  * @since 1.0.0
  */
-import * as testAnnotationMap from "@effect/io/internal/testing/testAnnotationMap"
+import * as testAnnotationMap from "@effect/io/internal_effect_untraced/testing/testAnnotationMap"
 import type * as TestAnnotation from "@effect/test/TestAnnotation"
 
 /**

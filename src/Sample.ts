@@ -1,11 +1,11 @@
 /**
  * @since 1.0.0
  */
+import type * as Option from "@effect/data/Option"
+import type { Predicate } from "@effect/data/Predicate"
 import type * as Effect from "@effect/io/Effect"
 import type * as Stream from "@effect/stream/Stream"
 import * as internal from "@effect/test/internal/sample"
-import type * as Option from "@fp-ts/data/Option"
-import type { Predicate } from "@fp-ts/data/Predicate"
 
 /**
  * @since 1.0.0
@@ -68,7 +68,6 @@ export const flatMap: <A, R2, A2>(f: (a: A) => Sample<R2, A2>) => <R>(self: Samp
 /**
  * Executes the specified effectual function for each element of the sample.
  *
- * @macro traced
  * @since 1.0.0
  * @category traversing
  */
