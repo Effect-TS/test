@@ -103,7 +103,7 @@ Constructs a new `TestAnnotation`.
 ```ts
 export declare const make: <A>(
   identifier: string,
-  tag: Context.Tag<A>,
+  tag: Context.Tag<A, A>,
   initial: A,
   combine: (a: A, b: A) => A
 ) => TestAnnotation<A>
@@ -128,7 +128,7 @@ export interface TestAnnotation<A> extends TestAnnotation.Proto {
   /**
    * The `Context` tag for the annotation.
    */
-  readonly tag: Context.Tag<A>
+  readonly tag: Context.Tag<A, A>
   /**
    * The initial value for the annotation.
    */

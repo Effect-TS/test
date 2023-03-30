@@ -13,7 +13,7 @@ Added in v1.0.0
 <h2 class="text-delta">Table of contents</h2>
 
 - [context](#context)
-  - [Tag](#tag)
+  - [Annotations](#annotations)
   - [live](#live)
 - [models](#models)
   - [Annotations (interface)](#annotations-interface)
@@ -31,14 +31,14 @@ Added in v1.0.0
 
 # context
 
-## Tag
+## Annotations
 
 The `Context` tag for `Annotations`.
 
 **Signature**
 
 ```ts
-export declare const Tag: Context.Tag<Annotations>
+export declare const Annotations: Context.Tag<Annotations, Annotations>
 ```
 
 Added in v1.0.0

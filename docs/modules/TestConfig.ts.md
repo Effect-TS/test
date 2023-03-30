@@ -15,7 +15,7 @@ Added in v1.0.0
 - [constructors](#constructors)
   - [make](#make)
 - [context](#context)
-  - [Tag](#tag)
+  - [TestConfig](#testconfig)
   - [defaultTestConfig](#defaulttestconfig)
   - [live](#live)
 - [getters](#getters)
@@ -49,14 +49,14 @@ Added in v1.0.0
 
 # context
 
-## Tag
+## TestConfig
 
 The `Context` tag for `TestConfig`.
 
 **Signature**
 
 ```ts
-export declare const Tag: Context.Tag<TestConfig>
+export declare const TestConfig: Context.Tag<TestConfig, TestConfig>
 ```
 
 Added in v1.0.0

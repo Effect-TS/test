@@ -75,7 +75,7 @@ Added in v1.0.0
 ```ts
 export declare const runFork: <E, A>(
   effect: Effect.Effect<never, E, A>,
-  scheduler?: Scheduler | undefined
+  options?: Runtime.RunForkOptions | undefined
 ) => RuntimeFiber<E, A>
 ```
 

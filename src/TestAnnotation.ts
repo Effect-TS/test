@@ -38,7 +38,7 @@ export interface TestAnnotation<A> extends TestAnnotation.Proto {
   /**
    * The `Context` tag for the annotation.
    */
-  readonly tag: Context.Tag<A>
+  readonly tag: Context.Tag<A, A>
   /**
    * The initial value for the annotation.
    */
@@ -79,7 +79,7 @@ export const isTestAnnotation: (u: unknown) => u is TestAnnotation<unknown> = te
  */
 export const make: <A>(
   identifier: string,
-  tag: Context.Tag<A>,
+  tag: Context.Tag<A, A>,
   initial: A,
   combine: (a: A, b: A) => A
 ) => TestAnnotation<A> = testAnnotation.make as any
