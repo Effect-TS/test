@@ -15,7 +15,7 @@ export const effect = (() => {
   const f = <E, A>(name: string, self: () => Effect.Effect<never, E, A>, timeout = 5_000) => {
     return it(
       name,
-      () => pipe(Effect.suspendSucceed(self), TestRuntime.runPromise),
+      () => pipe(Effect.suspend(self), TestRuntime.runPromise),
       timeout
     )
   }
@@ -27,7 +27,7 @@ export const effect = (() => {
     ) => {
       return it.skip(
         name,
-        () => pipe(Effect.suspendSucceed(self), TestRuntime.runPromise),
+        () => pipe(Effect.suspend(self), TestRuntime.runPromise),
         timeout
       )
     },
@@ -38,7 +38,7 @@ export const effect = (() => {
     ) => {
       return it.only(
         name,
-        () => pipe(Effect.suspendSucceed(self), TestRuntime.runPromise),
+        () => pipe(Effect.suspend(self), TestRuntime.runPromise),
         timeout
       )
     }
@@ -54,7 +54,7 @@ export const live = <E, A>(
     name,
     () =>
       pipe(
-        Effect.suspendSucceed(self),
+        Effect.suspend(self),
         Effect.runPromise
       ),
     timeout
@@ -85,7 +85,7 @@ export const scoped = <E, A>(
 ) => {
   return it(
     name,
-    () => pipe(Effect.suspendSucceed(self), Effect.scoped, TestRuntime.runPromise),
+    () => pipe(Effect.suspend(self), Effect.scoped, TestRuntime.runPromise),
     timeout
   )
 }
@@ -97,7 +97,7 @@ export const scopedLive = <E, A>(
 ) => {
   return it(
     name,
-    () => pipe(Effect.suspendSucceed(self), Effect.scoped, Effect.runPromise),
+    () => pipe(Effect.suspend(self), Effect.scoped, Effect.runPromise),
     timeout
   )
 }

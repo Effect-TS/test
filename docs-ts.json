@@ -1,4 +1,12 @@
 {
   "exclude": ["src/internal/**/*.ts"],
-  "theme": "mikearnaldi/just-the-docs"
+  "theme": "mikearnaldi/just-the-docs",
+  "compilerOptions": {
+    "paths": {
+      "@effect/test": ["./src/index.ts"],
+      "@effect/test/test/*": ["./test/*"],
+      "@effect/test/examples/*": ["./examples/*"],
+      "@effect/test/*": ["./src/*"]
+    }
+  }
 }

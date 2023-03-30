@@ -9,7 +9,6 @@ import type { RuntimeFiber } from "@effect/io/Fiber"
 import type { RuntimeFlags } from "@effect/io/Fiber/Runtime/Flags"
 import * as FiberRefs from "@effect/io/FiberRefs"
 import * as Runtime from "@effect/io/Runtime"
-import type { Scheduler } from "@effect/io/Scheduler"
 import { TestContext } from "@effect/test/TestContext"
 
 class TestRuntime<R> implements Runtime.Runtime<R> {
@@ -22,10 +21,10 @@ class TestRuntime<R> implements Runtime.Runtime<R> {
     this.live = Runtime.make(context, runtimeFlags, fiberRefs)
   }
 
-  runFork: <E, A>(effect: Effect.Effect<R, E, A>, scheduler?: Scheduler | undefined) => RuntimeFiber<E, A> = (
+  runFork: <E, A>(effect: Effect.Effect<R, E, A>, options?: Runtime.RunForkOptions) => RuntimeFiber<E, A> = (
     effect,
-    scheduler
-  ) => Runtime.runFork(this.live)(Effect.provideSomeLayer(TestContext)(effect), scheduler)
+    options
+  ) => Runtime.runFork(this.live)(Effect.provideSomeLayer(TestContext)(effect), options)
 
   runCallback: <E, A>(
     effect: Effect.Effect<R, E, A>,

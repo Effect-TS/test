@@ -48,7 +48,7 @@ export interface Live {
  * @category context
  */
 export const defaultLive: Layer.Layer<never, never, Live> = Layer.effect(
-  internal.Tag,
+  internal.Live,
   Effect.contextWith<never, Live>((env) => ({
     [LiveTypeId]: LiveTypeId,
     provide: (effect) =>

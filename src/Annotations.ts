@@ -71,7 +71,7 @@ export declare namespace Annotations {
  * @since 1.0.0
  * @category context
  */
-export const Tag: Context.Tag<Annotations> = annotations.Tag as any
+export const Annotations: Context.Tag<Annotations, Annotations> = annotations.Annotations as any
 
 /**
  * Returns `true` if the specified value is an `Annotations`, `false`
